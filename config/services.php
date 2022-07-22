@@ -30,4 +30,13 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'open-weather-map' => [
+        'uri' => env('OPEN_WEATHER_MAP_API_URI', 'api.openweathermap.org'),
+        'token' => env('OPEN_WEATHER_MAP_API_TOKEN'),
+        'timeout' => env('OPEN_WEATHER_MAP_TIMEOUT', 10),
+        'retry_times' => env('OPEN_WEATHER_MAP_RETRY_TIMES', null),
+        'retry_milliseconds' => env('OPEN_WEATHER_MAP_RETRY_MILLISECONDS', null),
+    ],
+
+
 ];
