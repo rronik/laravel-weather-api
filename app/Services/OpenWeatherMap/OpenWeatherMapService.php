@@ -117,9 +117,7 @@ class OpenWeatherMapService implements ApiServiceContract
             ForecastNotFoundException::make();
         }
 
-        $forecast['lat'] = $city->lat;
-        $forecast['lon'] = $city->lon;
-        $forecast['city'] = $city->name;
+        $forecast['city_id'] = $city->id;
 
         return WeatherForecastDataFactory::make(attributes: $forecast);
 

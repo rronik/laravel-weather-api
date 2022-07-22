@@ -17,9 +17,7 @@ class WeatherForecastDataFactory implements FactoryContract
     public static function make(array $attributes): WeatherForecastData
     {
         return new WeatherForecastData(
-            lon: $attributes['lon'],
-            lat: $attributes['lat'],
-            city: $attributes['city'],
+            city_id: $attributes['city_id'],
             date: Carbon::parse($attributes['dt']),
             day_temp: $attributes['temp']['day'],
             min_temp: $attributes['temp']['min'],
