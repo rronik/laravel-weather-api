@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Services\OpenWeatherMap;
 
+use App\DataObjects\Services\WeatherForecastData;
 use App\Exceptions\ApiResponseException;
 use App\Exceptions\ForecastNotFoundException;
+use App\Factories\Services\WeatherForecastDataFactory;
 use App\Infrasctructure\Contracts\Services\ApiServiceContract;
-use App\Infrasctructure\DataObjects\Services\WeatherForecastData;
-use App\Infrasctructure\Factories\Services\WeatherForecastDataFactory;
 use App\Models\City;
 use App\Traits\HasFake;
 use Carbon\Carbon;
@@ -91,6 +91,7 @@ class OpenWeatherMapService implements ApiServiceContract
      * @param Carbon $date
      * @return WeatherForecastData
      * @throws ApiResponseException
+     * @throws ForecastNotFoundException
      */
     public function dailyForecastByCityAndDate(City $city, Carbon $date): WeatherForecastData
     {
@@ -114,7 +115,7 @@ class OpenWeatherMapService implements ApiServiceContract
         $forecast = $response->collect('daily')->whereBetween('dt', [$date->startOfDay()->timestamp, $date->endOfDay()->timestamp])->first();
 
         if (!$forecast) {
-            ForecastNotFoundException::make();
+            throw ForecastNotFoundException::make();
         }
 
         $forecast['city_id'] = $city->id;

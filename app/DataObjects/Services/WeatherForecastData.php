@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infrasctructure\DataObjects\Services;
+namespace App\DataObjects\Services;
 
 use App\Infrasctructure\Contracts\DataObjects\DataObjectContract;
 use Carbon\Carbon;

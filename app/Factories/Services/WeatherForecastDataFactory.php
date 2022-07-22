@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Infrasctructure\Factories\Services;
+namespace App\Factories\Services;
 
+use App\DataObjects\Services\WeatherForecastData;
 use App\Infrasctructure\Contracts\Factories\FactoryContract;
-use App\Infrasctructure\DataObjects\Services\WeatherForecastData;
 use Carbon\Carbon;
 
 class WeatherForecastDataFactory implements FactoryContract

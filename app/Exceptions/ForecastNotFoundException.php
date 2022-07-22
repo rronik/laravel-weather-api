@@ -12,6 +12,6 @@ class ForecastNotFoundException extends Exception implements ExceptionContract
      */
     public static function make(): static
     {
-        return new static('No forecast was found for the given date and city!');
+        return new static('No forecast was found for the given date!');
     }
 }
