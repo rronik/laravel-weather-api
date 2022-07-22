@@ -10,15 +10,16 @@ use Carbon\Carbon;
 class WeatherForecastData implements DataObjectContract
 {
     public function __construct(
-        public int    $city_id,
-        public Carbon $date,
-        public float  $day_temp,
-        public float  $min_temp,
-        public float  $max_temp,
-        public float  $feels_like,
-        public float  $pressure,
-        public float  $humidity,
-        public float  $wind_speed,
+        public CityData $city,
+        public int      $city_id,
+        public Carbon   $date,
+        public float    $day_temp,
+        public float    $min_temp,
+        public float    $max_temp,
+        public float    $feels_like,
+        public float    $pressure,
+        public float    $humidity,
+        public float    $wind_speed,
     )
     {
     }
@@ -29,6 +30,7 @@ class WeatherForecastData implements DataObjectContract
     public function toArray(): array
     {
         return [
+            'city' => $this->city,
             'city_id' => $this->city_id,
             'date' => $this->date,
             'day_temp' => $this->day_temp,
