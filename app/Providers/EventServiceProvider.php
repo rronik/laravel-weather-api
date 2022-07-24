@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Events\WeatherForecastFetchedFromApiEvent;
 use App\Listeners\SyncWeatherForecastWithDBListener;
+use App\Models\City;
+use App\Observers\CityObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -31,6 +33,6 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        City::observe(CityObserver::class);
     }
 }

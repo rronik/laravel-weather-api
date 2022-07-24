@@ -54,7 +54,6 @@ class SyncWeatherForecastWithDBCommand extends Command
 
         foreach ($cities as $city) {
             $apiForecast = $this->fetchWeatherForecastFromAPIForDateAndCityAction->execute($city, $today);
-//            $this->syncWeatherForecastWithDBAction->execute($apiForecast);
             SyncWeatherForecastWithDBJob::dispatch($apiForecast);
         }
 
