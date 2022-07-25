@@ -31,11 +31,11 @@ return [
     ],
 
     'open-weather-map' => [
-        'uri' => env('OPEN_WEATHER_MAP_API_URI', 'api.openweathermap.org'),
-        'token' => env('OPEN_WEATHER_MAP_API_TOKEN'),
-        'timeout' => env('OPEN_WEATHER_MAP_TIMEOUT', 10),
-        'retry_times' => env('OPEN_WEATHER_MAP_RETRY_TIMES', null),
-        'retry_milliseconds' => env('OPEN_WEATHER_MAP_RETRY_MILLISECONDS', null),
+        'uri' => env(key: 'OPEN_WEATHER_MAP_API_URI', default: 'api.openweathermap.org'),
+        'token' => env(key: 'OPEN_WEATHER_MAP_API_TOKEN'),
+        'timeout' => env(key: 'OPEN_WEATHER_MAP_TIMEOUT', default: 10),
+        'retry_times' => env(key: 'OPEN_WEATHER_MAP_RETRY_TIMES', default: 3),
+        'retry_milliseconds' => env(key: 'OPEN_WEATHER_MAP_RETRY_MILLISECONDS', default: 500),
     ],
 
 

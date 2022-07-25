@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Api;
 
 use App\Rules\NoLongerThanSevenDays;
 use Illuminate\Foundation\Http\FormRequest;
 
-class WeatherForecastRequest extends FormRequest
+class IndexWeatherForecastRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

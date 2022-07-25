@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use App\Models\City;
@@ -12,7 +14,7 @@ class CitySeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         $rows = [
             ['name' => 'New York', 'lat' => 40.7128, 'lon' => 74.0060, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')],

@@ -25,7 +25,7 @@ class SyncWeatherForecastWithDBListener
      * @param WeatherForecastFetchedFromApiEvent $event
      * @return void
      */
-    public function handle(WeatherForecastFetchedFromApiEvent $event)
+    public function handle(WeatherForecastFetchedFromApiEvent $event): void
     {
         SyncWeatherForecastWithDBJob::dispatch($event->weatherForecastData);
     }

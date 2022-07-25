@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Exceptions;
 
 use App\Infrasctructure\Contracts\Exceptions\ExceptionContract;
@@ -12,6 +14,6 @@ class ForecastNotFoundException extends Exception implements ExceptionContract
      */
     public static function make(): static
     {
-        return new static('No forecast was found for the given date!');
+        return new static('No forecast was found!');
     }
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature\Http\Controllers\Observers;
+namespace Tests\Feature\Observers;
 
 use App\Jobs\CacheCityDataJob;
 use App\Models\City;
@@ -12,16 +12,16 @@ use Tests\TestCase;
 
 class CityObserverTest extends TestCase
 {
-    public function test_it_will_update_cache_when_a_city_is_created()
+    public function test_it_will_update_cache_when_a_city_is_created(): void
     {
         Bus::fake();
 
         City::factory()->create();
 
-        Bus::assertDispatched(CacheCityDataJob::class, 1);
+        Bus::assertDispatched(command: CacheCityDataJob::class, callback: 1);
     }
 
-    public function test_it_will_update_cache_when_a_city_is_updated()
+    public function test_it_will_update_cache_when_a_city_is_updated(): void
     {
         $city = City::factory()->create();
 
@@ -29,10 +29,10 @@ class CityObserverTest extends TestCase
 
         $city->refresh()->update(['name', 'Prishtina']);
 
-        Bus::assertDispatched(CacheCityDataJob::class, 1);
+        Bus::assertDispatched(command: CacheCityDataJob::class, callback: 1);
     }
 
-    public function test_it_will_update_cache_when_a_city_is_deleted()
+    public function test_it_will_update_cache_when_a_city_is_deleted(): void
     {
         $city = City::factory()->create();
 
@@ -40,6 +40,6 @@ class CityObserverTest extends TestCase
 
         $city->delete();
 
-        Bus::assertDispatched(CacheCityDataJob::class, 1);
+        Bus::assertDispatched(command: CacheCityDataJob::class, callback: 1);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Rules;
 
 use Carbon\Carbon;
@@ -36,6 +38,6 @@ class NoLongerThanSevenDays implements Rule
      */
     public function message(): string
     {
-        return 'Our API accepts up to 7 days from today\'s date.';
+        return __(key: 'Our API accepts up to 7 days from today\'s date.');
     }
 }

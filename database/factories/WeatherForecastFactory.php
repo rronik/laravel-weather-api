@@ -13,7 +13,7 @@ class WeatherForecastFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'city_id' => City::factory(),

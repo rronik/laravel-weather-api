@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs;
 
 use App\DataObjects\Services\WeatherForecastData;
@@ -27,9 +29,9 @@ class SyncWeatherForecastWithDBJob implements ShouldQueue
     /**
      * Execute the job.
      *
-     * @return void
+     * @return WeatherForecast
      */
-    public function handle()
+    public function handle(): WeatherForecast
     {
         return WeatherForecast::updateOrCreate(
             ['city_id' => $this->weatherForecastData->city_id, 'date' => $this->weatherForecastData->date->format('Y-m-d')],

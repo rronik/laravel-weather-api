@@ -27,11 +27,11 @@ class OpenWeatherMapService implements ApiServiceContract
      * @param int|null $retryAfterMilliseconds
      */
     public function __construct(
-        protected string $uri,
-        protected string $token,
-        public null|int  $timeout = 10,
-        public null|int  $retryTimes = null,
-        public null|int  $retryAfterMilliseconds = null,
+        public string   $uri,
+        public string   $token,
+        public null|int $timeout = 10,
+        public null|int $retryTimes = null,
+        public null|int $retryAfterMilliseconds = null,
     )
     {
     }
@@ -63,7 +63,7 @@ class OpenWeatherMapService implements ApiServiceContract
      * @param int $timeout
      * @return void
      */
-    public function setTimeout(int $timeout)
+    public function setTimeout(int $timeout): void
     {
         $this->timeout = $timeout;
     }
@@ -72,7 +72,7 @@ class OpenWeatherMapService implements ApiServiceContract
      * @param int $retryTimes
      * @return void
      */
-    public function setRetryTimes(int $retryTimes)
+    public function setRetryTimes(int $retryTimes): void
     {
         $this->retryTimes = $retryTimes;
     }
@@ -81,7 +81,7 @@ class OpenWeatherMapService implements ApiServiceContract
      * @param int $retryAfterMilliseconds
      * @return void
      */
-    public function setRetryAfterMilliseconds(int $retryAfterMilliseconds)
+    public function setRetryAfterMilliseconds(int $retryAfterMilliseconds): void
     {
         $this->retryAfterMilliseconds = $retryAfterMilliseconds;
     }
@@ -112,11 +112,13 @@ class OpenWeatherMapService implements ApiServiceContract
             throw ApiResponseException::make();
         }
 
-        $forecast = $response->collect('daily')->whereBetween('dt', [$date->startOfDay()->timestamp, $date->endOfDay()->timestamp])->first();
+        if ($response['lat'] != $city->lat || $response['lon'] != $city->lon) throw ForecastNotFoundException::make();
 
-        if (!$forecast) {
-            throw ForecastNotFoundException::make();
-        }
+        $date->timezone($response['timezone']);
+
+        $forecast = $response->collect(key: 'daily')->whereBetween(key: 'dt', values: [$date->startOfDay()->timestamp, $date->endOfDay()->timestamp])->first();
+
+        if (!$forecast) throw ForecastNotFoundException::make();
 
         $forecast['city'] = $city->toArray();
 

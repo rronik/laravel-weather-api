@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use App\Actions\FetchWeatherForecastFromAPIForDateAndCityAction;
@@ -8,6 +10,7 @@ use App\Exceptions\ApiResponseException;
 use App\Exceptions\ForecastNotFoundException;
 use App\Jobs\SyncWeatherForecastWithDBJob;
 use App\Models\City;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class SyncWeatherForecastWithDBCommand extends Command
@@ -26,10 +29,10 @@ class SyncWeatherForecastWithDBCommand extends Command
      */
     protected $description = 'Synchronizes data retrieved from the OpenWeatherMap API with local DB';
 
+
     /**
-     * Create a new command instance.
-     *
-     * @return void
+     * @param SyncWeatherForecastWithDBAction $syncWeatherForecastWithDBAction
+     * @param FetchWeatherForecastFromAPIForDateAndCityAction $fetchWeatherForecastFromAPIForDateAndCityAction
      */
     public function __construct(
         protected SyncWeatherForecastWithDBAction                 $syncWeatherForecastWithDBAction,
@@ -46,11 +49,11 @@ class SyncWeatherForecastWithDBCommand extends Command
      * @throws ApiResponseException
      * @throws ForecastNotFoundException
      */
-    public function handle()
+    public function handle(): int
     {
         $cities = City::all();
 
-        $today = today();
+        $today = Carbon::today();
 
         foreach ($cities as $city) {
             $apiForecast = $this->fetchWeatherForecastFromAPIForDateAndCityAction->execute($city, $today);

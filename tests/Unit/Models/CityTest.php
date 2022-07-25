@@ -16,7 +16,7 @@ class CityTest extends TestCase
      *
      * @return void
      */
-    public function test_it_has_weather_forecasts()
+    public function test_it_has_weather_forecasts(): void
     {
         $city = City::factory()->create();
         WeatherForecast::factory()->for($city)->create();
