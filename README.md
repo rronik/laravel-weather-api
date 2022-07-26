@@ -21,11 +21,11 @@ A simple Laravel API that returns the weather forecast for a given date.
   composer install --ignore-platform-reqs
   ```
 
-```
-./vendor/bin/sail up
-```
-
 - Copy ``.env.example`` to ``.env``
+
+```
+./vendor/bin/sail up -d
+```
 
 ```
 ./vendor/bin/sail artisan key:gen
@@ -184,7 +184,7 @@ curl --location --request POST 'http://localhost/api/weather-forecast' \
 - Request
 
 ```
-curl --location --request PUT 'http://localhost/api/weather-forecast/7' \
+curl --location --request PUT 'http://localhost/api/weather-forecast/1' \
 --header 'Accept: application/json' \
 --header 'Content-Type: application/x-www-form-urlencoded' \
 --data-urlencode 'city_id=1' \
