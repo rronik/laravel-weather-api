@@ -10,6 +10,9 @@ A simple Laravel API that returns the weather forecast for a given date.
 
 ### Setting up
 
+- Copy ``.env.example`` to ``.env``
+
+
 - Inside project directory run:
 
 ```
@@ -20,8 +23,6 @@ A simple Laravel API that returns the weather forecast for a given date.
   laravelsail/php81-composer:latest \
   composer install --ignore-platform-reqs
   ```
-
-- Copy ``.env.example`` to ``.env``
 
 ```
 ./vendor/bin/sail up -d
