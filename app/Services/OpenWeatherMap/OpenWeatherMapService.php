@@ -114,8 +114,6 @@ class OpenWeatherMapService implements ApiServiceContract
 
         if ($response['lat'] != $city->lat || $response['lon'] != $city->lon) throw ForecastNotFoundException::make();
 
-        $date->timezone($response['timezone']);
-
         $forecast = $response->collect(key: 'daily')->whereBetween(key: 'dt', values: [$date->startOfDay()->timestamp, $date->endOfDay()->timestamp])->first();
 
         if (!$forecast) throw ForecastNotFoundException::make();

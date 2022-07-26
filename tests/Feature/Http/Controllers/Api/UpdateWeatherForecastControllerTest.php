@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Http\Controllers\Api;
 
+use App\Models\City;
 use App\Models\WeatherForecast;
-use Database\Seeders\CitySeeder;
 use Tests\TestCase;
 use function route;
 
@@ -17,7 +17,7 @@ class UpdateWeatherForecastControllerTest extends TestCase
      */
     public function test_it_can_update_a_forecast(): void
     {
-        $this->seed(class: CitySeeder::class);
+        $city = City::first();
 
         $forecast = WeatherForecast::factory()->create();
 
@@ -27,11 +27,11 @@ class UpdateWeatherForecastControllerTest extends TestCase
             uri: route(
                 name: 'weather.forecast.update', parameters: ['weatherForecast' => $forecast->id]
             ),
-            data: $this->weatherDataForRequest()
+            data: $this->weatherDataForRequest($city)
         );
 
         $this->assertDatabaseCount(table: 'weather_forecasts', count: 1);
-        $this->assertDatabaseHas(table: 'weather_forecasts', data: $this->weatherDataForRequest());
+        $this->assertDatabaseHas(table: 'weather_forecasts', data: $this->weatherDataForRequest($city));
     }
 
 }

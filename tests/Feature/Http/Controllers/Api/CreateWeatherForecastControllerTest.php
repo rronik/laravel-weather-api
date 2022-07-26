@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Http\Controllers\Api;
 
-use Database\Seeders\CitySeeder;
+use App\Models\City;
 use Tests\TestCase;
 use function route;
 
@@ -16,7 +16,7 @@ class CreateWeatherForecastControllerTest extends TestCase
      */
     public function test_it_can_create_a_forecast(): void
     {
-        $this->seed(class: CitySeeder::class);
+        $city = City::first();
 
         $this->assertDatabaseCount(table: 'weather_forecasts', count: 0);
 
@@ -24,11 +24,11 @@ class CreateWeatherForecastControllerTest extends TestCase
             uri: route(
                 name: 'weather.forecast.create'
             ),
-            data: $this->weatherDataForRequest()
+            data: $this->weatherDataForRequest($city)
         );
 
         $this->assertDatabaseCount(table: 'weather_forecasts', count: 1);
-        $this->assertDatabaseHas(table: 'weather_forecasts', data: $this->weatherDataForRequest());
+        $this->assertDatabaseHas(table: 'weather_forecasts', data: $this->weatherDataForRequest($city));
     }
 
 }

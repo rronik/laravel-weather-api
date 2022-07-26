@@ -8,7 +8,6 @@ use App\DataObjects\Services\WeatherForecastData;
 use App\Models\City;
 use App\Services\OpenWeatherMap\OpenWeatherMapService;
 use Carbon\Carbon;
-use Database\Seeders\CitySeeder;
 use Tests\TestCase;
 
 class OpenWeatherMapServiceTest extends TestCase
@@ -56,28 +55,13 @@ class OpenWeatherMapServiceTest extends TestCase
      */
     public function test_it_can_return_the_forecast_for_a_specified_city_and_date()
     {
-        $this->seed(class: CitySeeder::class);
-
-        $this->assertInstanceOf(
-            expected: WeatherForecastData::class,
-            actual: app(abstract: OpenWeatherMapService::class)->dailyForecastByCityAndDate(city: City::first(), date: Carbon::now()));
-
-    }
-
-    /**
-     * @return void
-     */
-    public function test_it_can_return_the_forecast_for_a_specified_city_and_dated()
-    {
-        $this->seed(class: CitySeeder::class);
-
-        $date = Carbon::tomorrow()->subHour();
+        $date = Carbon::parse('2022-07-26')->subHour();
 
         $this->fakeApiCall();
 
         $this->assertInstanceOf(
             expected: WeatherForecastData::class,
-            actual: app(abstract: OpenWeatherMapService::class)->dailyForecastByCityAndDate(city: City::find(3), date: $date));
+            actual: app(abstract: OpenWeatherMapService::class)->dailyForecastByCityAndDate(city: City::where('name', 'Paris')->first(), date: $date));
 
     }
 

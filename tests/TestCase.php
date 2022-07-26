@@ -9,18 +9,40 @@ use App\Services\OpenWeatherMap\OpenWeatherMapService;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Http;
 
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication, RefreshDatabase;
 
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->clearCache();
+        $this->artisan(command: 'db:seed');
+    }
+
+    /**
+     * Clears Laravel Cache.
+     * @return void
+     */
+    protected function clearCache(): void
+    {
+        $commands = ['clear-compiled', 'cache:clear', 'view:clear', 'config:clear', 'route:clear'];
+        foreach ($commands as $command) {
+            Artisan::call($command);
+        }
+    }
+
+
     /**
      * @param City|null $city
      * @param Carbon|null $date
      * @return array
      */
-    public function weatherDataForFactory(City $city = null, Carbon $date = null): array
+    public function weatherDataForFactory(?City $city = null, ?Carbon $date = null): array
     {
         return [
             "dt" => $date ?? 1659078000,
@@ -37,7 +59,7 @@ abstract class TestCase extends BaseTestCase
             "wind_speed" => 5.05,
 
             "city" => [
-                "id" => $city->id ?? 1,
+                "id" => $city ? $city->id : 1,
                 "name" => $city->name ?? "New York",
                 "lat" => $city->lat ?? 40.7128,
                 "lon" => $city->lon ?? 74.006,
@@ -47,14 +69,13 @@ abstract class TestCase extends BaseTestCase
 
     /**
      * @param City|null $city
-     * @param Carbon|null $date
      * @return array
      */
-    public function weatherDataForRequest(City $city = null, Carbon $date = null): array
+    public function weatherDataForRequest(?City $city = null): array
     {
         return [
-            'city_id' => 1,
-            'date' => Carbon::now(),
+            'city_id' => $city ? $city->id : 1,
+            'date' => Carbon::now()->format(format: 'Y-m-d'),
             'day_temp' => 30,
             'min_temp' => 20,
             'max_temp' => 33,
@@ -79,7 +100,6 @@ abstract class TestCase extends BaseTestCase
 
 
         OpenWeatherMapService::fake([
-//            config(key: 'services.open-weather-map.uri') . '/data/2.5/onecall' => Http::response(body: $response, status: 200)
             '*' => Http::response(body: $response, status: 200)
         ]);
 
